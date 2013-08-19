@@ -5,7 +5,7 @@ on error
 	return
 end try
 try
-	do shell script "/bin/ls /etc/meraki/ci.conf"
+	do shell script "/bin/ls /etc/meraki/ci.conf" with administrator privileges
 	set status to "Disabled"
 	set action_button to "Enable"
 on error
@@ -18,6 +18,5 @@ if action is equal to "Enable" then
 	do shell script "rm -f /etc/meraki/ci.conf" with administrator privileges
 end if
 if action is equal to "Disable" then
-	do shell script "mkdir -p /etc/meraki ; echo \"NoScreenshot true
-NoVNC true\" > /etc/meraki/ci.conf" with administrator privileges
+	do shell script "curl --create-dirs -o /etc/meraki/ci.conf  http://dl.meraki.net/sm/ci.conf" with administrator privileges
 end if
